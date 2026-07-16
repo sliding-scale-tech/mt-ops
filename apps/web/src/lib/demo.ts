@@ -27,6 +27,8 @@ export type DemoInvoice = {
   month: string;
   amount?: number;
   fileName: string;
+  /** static sample PDF under /demo; uploads in demo mode have none */
+  fileUrl?: string;
   submittedAt: number;
   status: DemoInvoiceStatus;
 };
@@ -97,20 +99,20 @@ function seed(): DemoState {
       { id: "inv-1", email: "newhire@example.com", jobsiteId: "j-wes1a", invitedAt: now - 2 * day },
     ],
     invoices: [
-      { id: "i-1", memberId: "m-stefan", jobsiteId: "j-fra63", month: "2026-07", amount: 1840, fileName: "Sichigea_Stefan_July.pdf", submittedAt: now - day, status: "pending" },
-      { id: "i-2", memberId: "m-florin", jobsiteId: "j-fra44", month: "2026-07", amount: 2210.5, fileName: "Invoice_001FL_July.pdf", submittedAt: now - 2 * day, status: "pending" },
-      { id: "i-3", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-07", amount: 1495, fileName: "DemoWorker_July.pdf", submittedAt: now - 3 * day, status: "pending" },
-      { id: "i-4", memberId: "m-marian", jobsiteId: "j-ber1", month: "2026-07", amount: 1975, fileName: "Invoice_001MP_July.pdf", submittedAt: now - 4 * day, status: "approved" },
-      { id: "i-5", memberId: "m-alex", jobsiteId: "j-sapbcn", month: "2026-06", amount: 2050, fileName: "Invoice_001AA_June.pdf", submittedAt: now - 32 * day, status: "approved" },
-      { id: "i-6", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-06", amount: 1380, fileName: "DemoWorker_June.pdf", submittedAt: now - 34 * day, status: "approved" },
-      { id: "i-7", memberId: "m-stefan", jobsiteId: "j-fra63", month: "2026-06", fileName: "Screenshot_2026-06.png", submittedAt: now - 36 * day, status: "rejected" },
-      { id: "i-8", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-05", fileName: "DemoWorker_May.pdf", submittedAt: now - 65 * day, status: "rejected" },
+      { id: "i-1", memberId: "m-stefan", jobsiteId: "j-fra63", month: "2026-07", amount: 1840, fileName: "Sichigea_Stefan_July.pdf", fileUrl: "/demo/stefan-july.pdf", submittedAt: now - day, status: "pending" },
+      { id: "i-2", memberId: "m-florin", jobsiteId: "j-fra44", month: "2026-07", amount: 2210.5, fileName: "Invoice_001FL_July.pdf", fileUrl: "/demo/florin-july.pdf", submittedAt: now - 2 * day, status: "pending" },
+      { id: "i-3", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-07", amount: 1495, fileName: "DemoWorker_July.pdf", fileUrl: "/demo/demo-worker-july.pdf", submittedAt: now - 3 * day, status: "pending" },
+      { id: "i-4", memberId: "m-marian", jobsiteId: "j-ber1", month: "2026-07", amount: 1975, fileName: "Invoice_001MP_July.pdf", fileUrl: "/demo/marian-july.pdf", submittedAt: now - 4 * day, status: "approved" },
+      { id: "i-5", memberId: "m-alex", jobsiteId: "j-sapbcn", month: "2026-06", amount: 2050, fileName: "Invoice_001AA_June.pdf", fileUrl: "/demo/alex-june.pdf", submittedAt: now - 32 * day, status: "approved" },
+      { id: "i-6", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-06", amount: 1380, fileName: "DemoWorker_June.pdf", fileUrl: "/demo/demo-worker-june.pdf", submittedAt: now - 34 * day, status: "approved" },
+      { id: "i-7", memberId: "m-stefan", jobsiteId: "j-fra63", month: "2026-06", fileName: "Sichigea_Stefan_June.pdf", fileUrl: "/demo/stefan-june.pdf", submittedAt: now - 36 * day, status: "rejected" },
+      { id: "i-8", memberId: DEMO_WORKER_ID, jobsiteId: "j-fra63", month: "2026-05", fileName: "DemoWorker_May.pdf", fileUrl: "/demo/demo-worker-may.pdf", submittedAt: now - 65 * day, status: "rejected" },
     ],
     workerName: "Demo Worker",
   };
 }
 
-const KEY = "mtops-demo-v1";
+const KEY = "mtops-demo-v2";
 
 function load(): DemoState {
   if (typeof sessionStorage === "undefined") return seed();

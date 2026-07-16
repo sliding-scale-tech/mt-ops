@@ -72,7 +72,32 @@ function jobsiteName(state: DemoState, id?: string) {
 }
 
 function demoFileClick() {
-  toast.info("Demo document — no real file behind this one");
+  toast.info("Files uploaded in demo mode aren't stored");
+}
+
+function DemoFileButton({
+  fileName,
+  fileUrl,
+  className,
+}: {
+  fileName: string;
+  fileUrl?: string;
+  className: string;
+}) {
+  if (fileUrl) {
+    return (
+      <a href={fileUrl} target="_blank" rel="noreferrer" className={className}>
+        <Download className="size-3.5 shrink-0" />
+        <span className="truncate">{fileName}</span>
+      </a>
+    );
+  }
+  return (
+    <button type="button" onClick={demoFileClick} className={className}>
+      <Download className="size-3.5 shrink-0" />
+      <span className="truncate">{fileName}</span>
+    </button>
+  );
 }
 
 /* ------------------------------- Admin ------------------------------- */
@@ -276,14 +301,11 @@ export function DemoAdminInvoices() {
         <td className="py-3 pr-4">{formatMonth(invoice.month)}</td>
         <td className="py-3 pr-4">{formatAmount(invoice.amount)}</td>
         <td className="py-3 pr-4">
-          <button
-            type="button"
-            onClick={demoFileClick}
+          <DemoFileButton
+            fileName={invoice.fileName}
+            fileUrl={invoice.fileUrl}
             className="inline-flex max-w-44 items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs hover:bg-muted"
-          >
-            <Download className="size-3.5 shrink-0" />
-            <span className="truncate">{invoice.fileName}</span>
-          </button>
+          />
         </td>
         {showSubmitted && <td className="py-3 pr-4">{formatDate(invoice.submittedAt)}</td>}
         {showStatus && (
@@ -785,14 +807,11 @@ export function DemoWorkerInvoices() {
                     <td className="py-3 pr-4">{jobsiteName(state, invoice.jobsiteId)}</td>
                     <td className="py-3 pr-4">{formatAmount(invoice.amount)}</td>
                     <td className="py-3 pr-4">
-                      <button
-                        type="button"
-                        onClick={demoFileClick}
+                      <DemoFileButton
+                        fileName={invoice.fileName}
+                        fileUrl={invoice.fileUrl}
                         className="inline-flex max-w-40 items-center gap-1 truncate text-primary hover:underline"
-                      >
-                        <Download className="size-3.5 shrink-0" />
-                        <span className="truncate">{invoice.fileName}</span>
-                      </button>
+                      />
                     </td>
                     <td className="py-3 pr-4">{formatDate(invoice.submittedAt)}</td>
                     <td className="py-3">
