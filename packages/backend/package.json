@@ -9,8 +9,10 @@
     "dev:setup": "convex dev --configure --until-success"
   },
   "dependencies": {
+    "@clerk/backend": "^3.11.6",
     "convex": "catalog:",
     "dotenv": "catalog:",
+    "svix": "^1.97.0",
     "zod": "catalog:"
   },
   "devDependencies": {

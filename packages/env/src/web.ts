@@ -13,6 +13,8 @@ export const env = createEnv({
     VITE_CLERK_PUBLISHABLE_KEY: z.string().min(1),
   },
   runtimeEnv: (import.meta as any).env,
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
+  // `process` only exists server-side; the browser must not touch it
+  skipValidation:
+    typeof process !== "undefined" && !!process.env.SKIP_ENV_VALIDATION,
   emptyStringAsUndefined: true,
 });

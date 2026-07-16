@@ -166,12 +166,18 @@ importers:
 
   packages/backend:
     dependencies:
+      '@clerk/backend':
+        specifier: ^3.11.6
+        version: 3.11.6(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       convex:
         specifier: 'catalog:'
         version: 1.42.2(@clerk/react@6.12.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
       dotenv:
         specifier: 'catalog:'
         version: 17.4.2
+      svix:
+        specifier: ^1.97.0
+        version: 1.97.0
       zod:
         specifier: 'catalog:'
         version: 4.4.3
@@ -3887,6 +3893,9 @@ packages:
   strip-final-newline@4.0.0:
     resolution: {integrity: sha512-aulFJcD6YK8V1G7iRB5tigAP4TsHBZZrOV8pjV++zdUwmeV8uzbY7yn6h9MswN62adStNZFuCIx4haBnRuMDaw==}
     engines: {node: '>=18'}
+
+  svix@1.97.0:
+    resolution: {integrity: sha512-W8725SeneqfhPNSAlXR97yYefVBcomXDjnEJgTWw0HJHkhjs4yknNt6bvwW1Ujg2v5cCa+5AxDAN7wSf+ZAFMg==}
 
   systeminformation@5.31.17:
     resolution: {integrity: sha512-TvFA9iwDWlMjqZVlKIJ0Cy+Zgm9ttlMx0SMRwJDMNKyhlEKWBMb3+WRwDi/3dvHdWbexpos4Osp4U49p5WjB5g==}
@@ -7771,6 +7780,10 @@ snapshots:
   strip-final-newline@2.0.0: {}
 
   strip-final-newline@4.0.0: {}
+
+  svix@1.97.0:
+    dependencies:
+      standardwebhooks: 1.0.0
 
   systeminformation@5.31.17: {}
 

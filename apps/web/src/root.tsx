@@ -16,7 +16,6 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import Header from "./components/header";
 import { ThemeProvider } from "./components/theme-provider";
 
 export const middleware: Route.MiddlewareFunction[] = [clerkMiddleware()];
@@ -57,12 +56,11 @@ export default function App({ loaderData }: Route.ComponentProps) {
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           disableTransitionOnChange
           storageKey="vite-ui-theme"
         >
-          <div className="grid grid-rows-[auto_1fr] h-svh">
-            <Header />
+          <div className="app-gradient min-h-svh">
             <Outlet />
           </div>
           <Toaster richColors />
