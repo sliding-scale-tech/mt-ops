@@ -4,9 +4,11 @@ import { useQuery } from "convex/react";
 import { CalendarDays, Clock, FileText, MapPin, Upload } from "lucide-react";
 import { Link } from "react-router";
 
+import { DemoWorkerOverview } from "../components/demo";
+import { DEMO_WORKER_EMAIL } from "../lib/demo";
 import { StatCard } from "../components/stat-card";
 
-export default function WorkerOverview() {
+function RealWorkerOverview() {
   const me = useQuery(api.users.current);
   const invoices = useQuery(api.invoices.listMine);
 
@@ -67,4 +69,11 @@ export default function WorkerOverview() {
       </div>
     </div>
   );
+}
+
+export default function WorkerOverview() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_WORKER_EMAIL) return <DemoWorkerOverview />;
+  return <RealWorkerOverview />;
 }

@@ -30,6 +30,11 @@ import { Navigate, Outlet } from "react-router";
 import { toast } from "sonner";
 
 import { AppSidebar } from "../components/app-sidebar";
+import {
+  DEMO_ADMIN_EMAIL,
+  DEMO_ORG_NAME,
+  DEMO_WORKER_EMAIL,
+} from "../lib/demo";
 
 export function meta() {
   return [{ title: "Dashboard — MT Operation Systems" }];
@@ -85,16 +90,20 @@ function Gateway() {
   }, [ensureCurrent]);
 
   if (!ensured || me === undefined) return <FullPageLoader />;
-  if (!me || !me.orgId) return <Onboarding />;
-  if (me.role === "admin") return <Navigate to="/admin" replace />;
+  if (me?.email === DEMO_ADMIN_EMAIL) return <Navigate to="/admin" replace />;
+  const isDemo = me?.email === DEMO_WORKER_EMAIL;
+  if (!isDemo) {
+    if (!me || !me.orgId) return <Onboarding />;
+    if (me.role === "admin") return <Navigate to="/admin" replace />;
+  }
 
   return (
     <div className="flex min-h-svh">
       <AppSidebar
         items={workerNav}
-        name={me.name}
-        email={me.email}
-        orgName={me.org?.name}
+        name={me?.name}
+        email={me?.email ?? ""}
+        orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
       />
       <main className="min-w-0 flex-1 p-8">
         <Outlet />

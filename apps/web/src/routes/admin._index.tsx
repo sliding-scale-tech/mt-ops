@@ -24,10 +24,12 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { DemoAdminOverview } from "../components/demo";
+import { DEMO_ADMIN_EMAIL } from "../lib/demo";
 import { StatCard } from "../components/stat-card";
 import { formatAmount } from "../lib/format";
 
-export default function AdminOverview() {
+function RealAdminOverview() {
   const members = useQuery(api.members.list);
   const invoices = useQuery(api.invoices.listForOrg);
 
@@ -263,4 +265,11 @@ function JobsitesCard() {
       </CardContent>
     </Card>
   );
+}
+
+export default function AdminOverview() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_ADMIN_EMAIL) return <DemoAdminOverview />;
+  return <RealAdminOverview />;
 }

@@ -15,7 +15,10 @@ import { UserRound } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function WorkerSettings() {
+import { DemoWorkerSettings } from "../components/demo";
+import { DEMO_WORKER_EMAIL } from "../lib/demo";
+
+function RealWorkerSettings() {
   const me = useQuery(api.users.current);
   const updateName = useMutation(api.users.updateName);
   const [name, setName] = useState("");
@@ -95,4 +98,11 @@ export default function WorkerSettings() {
       </Card>
     </div>
   );
+}
+
+export default function WorkerSettings() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_WORKER_EMAIL) return <DemoWorkerSettings />;
+  return <RealWorkerSettings />;
 }

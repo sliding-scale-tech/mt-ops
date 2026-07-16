@@ -16,9 +16,11 @@ import { Mail, Trash2, UserPlus } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { DemoAdminSettings } from "../components/demo";
+import { DEMO_ADMIN_EMAIL } from "../lib/demo";
 import { formatDate } from "../lib/format";
 
-export default function AdminSettings() {
+function RealAdminSettings() {
   return (
     <div className="space-y-6">
       <div>
@@ -260,4 +262,11 @@ function MembersCard() {
       </CardContent>
     </Card>
   );
+}
+
+export default function AdminSettings() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_ADMIN_EMAIL) return <DemoAdminSettings />;
+  return <RealAdminSettings />;
 }

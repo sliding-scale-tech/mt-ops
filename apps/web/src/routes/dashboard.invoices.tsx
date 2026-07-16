@@ -15,10 +15,12 @@ import { Download, FileUp } from "lucide-react";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
+import { DemoWorkerInvoices } from "../components/demo";
+import { DEMO_WORKER_EMAIL } from "../lib/demo";
 import { StatusBadge } from "../components/status-badge";
 import { currentMonth, formatAmount, formatDate, formatMonth } from "../lib/format";
 
-export default function WorkerInvoices() {
+function RealWorkerInvoices() {
   return (
     <div className="space-y-6">
       <div>
@@ -201,4 +203,11 @@ function MyInvoicesCard() {
       </CardContent>
     </Card>
   );
+}
+
+export default function WorkerInvoices() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_WORKER_EMAIL) return <DemoWorkerInvoices />;
+  return <RealWorkerInvoices />;
 }

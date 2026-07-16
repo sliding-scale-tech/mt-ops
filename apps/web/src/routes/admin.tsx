@@ -17,6 +17,7 @@ import {
 import { Navigate, Outlet } from "react-router";
 
 import { AppSidebar } from "../components/app-sidebar";
+import { DEMO_ADMIN_EMAIL, DEMO_ORG_NAME } from "../lib/demo";
 
 export function meta() {
   return [{ title: "Admin — MT Operation Systems" }];
@@ -59,15 +60,18 @@ function AdminSkeleton() {
 function AdminGuard() {
   const me = useQuery(api.users.current);
   if (me === undefined) return <AdminSkeleton />;
-  if (!me || me.role !== "admin") return <Navigate to="/dashboard" replace />;
+  const isDemo = me?.email === DEMO_ADMIN_EMAIL;
+  if (!isDemo && (!me || me.role !== "admin")) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="flex min-h-svh">
       <AppSidebar
         items={adminNav}
-        name={me.name}
-        email={me.email}
-        orgName={me.org?.name}
+        name={me?.name}
+        email={me?.email ?? ""}
+        orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
       />
       <main className="min-w-0 flex-1 p-8">
         <Outlet />

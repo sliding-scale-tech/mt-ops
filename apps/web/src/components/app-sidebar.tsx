@@ -44,13 +44,13 @@ export function AppSidebar({
           item.disabled ? (
             <span
               key={item.label}
-              title="Coming soon"
+              title="Available on the paid plan"
               className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground/50"
             >
               <item.icon className="size-4" />
               {item.label}
-              <span className="ml-auto rounded-full bg-foreground/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide">
-                Soon
+              <span className="ml-auto rounded-full bg-gradient-to-r from-amber-200 to-yellow-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-amber-800 dark:from-amber-900 dark:to-yellow-950 dark:text-amber-200">
+                Paid
               </span>
             </span>
           ) : (

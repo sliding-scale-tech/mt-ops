@@ -21,13 +21,15 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
+import { DemoAdminInvoices } from "../components/demo";
+import { DEMO_ADMIN_EMAIL } from "../lib/demo";
 import { StatCard } from "../components/stat-card";
 import { StatusBadge } from "../components/status-badge";
 import { formatAmount, formatDate, formatMonth } from "../lib/format";
 
 type Status = "pending" | "approved" | "rejected";
 
-export default function AdminInvoices() {
+function RealAdminInvoices() {
   const invoices = useQuery(api.invoices.listForOrg);
   const [filter, setFilter] = useState<"all" | Status>("all");
 
@@ -246,4 +248,11 @@ function InvoiceAction({ id, status }: { id: Id<"invoices">; status: Status }) {
       <option value="pending">Pending</option>
     </select>
   );
+}
+
+export default function AdminInvoices() {
+  const gateMe = useQuery(api.users.current);
+  if (gateMe === undefined) return null;
+  if (gateMe?.email === DEMO_ADMIN_EMAIL) return <DemoAdminInvoices />;
+  return <RealAdminInvoices />;
 }
