@@ -9,6 +9,7 @@ import { Input } from "@my-better-t-app/ui/components/input";
 import { Label } from "@my-better-t-app/ui/components/label";
 import { Building2, MailCheck, UserPlus } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import type { Route } from "./+types/sign-up.$";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -16,11 +17,12 @@ import { GoogleIcon } from "../components/google-icon";
 import { getClerkErrorMessage } from "../lib/clerk-error";
 import { createSiteMeta } from "../lib/site-meta";
 
-export function meta({ location }: { location: { pathname: string } }) {
+export function meta({ location, matches }: { location: { pathname: string }; matches?: Route.MetaArgs["matches"] }) {
   return createSiteMeta({
     title: "Sign up — MT Operation Systems",
     description: "Create your MT Operation Systems account and start running operations for your organization.",
     path: location.pathname,
+    matches,
   });
 }
 

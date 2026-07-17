@@ -4,6 +4,7 @@ import { Input } from "@my-better-t-app/ui/components/input";
 import { Label } from "@my-better-t-app/ui/components/label";
 import { Building2, FlaskConical, LogIn } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import type { Route } from "./+types/sign-in.$";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 
@@ -11,11 +12,12 @@ import { GoogleIcon } from "../components/google-icon";
 import { getClerkErrorMessage } from "../lib/clerk-error";
 import { createSiteMeta } from "../lib/site-meta";
 
-export function meta({ location }: { location: { pathname: string } }) {
+export function meta({ location, matches }: { location: { pathname: string }; matches?: Route.MetaArgs["matches"] }) {
   return createSiteMeta({
     title: "Sign in — MT Operation Systems",
     description: "Sign in to MT Operation Systems to manage operations, jobsites, and your team.",
     path: location.pathname,
+    matches,
   });
 }
 

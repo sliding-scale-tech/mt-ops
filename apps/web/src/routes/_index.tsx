@@ -6,8 +6,8 @@ import { Link, Navigate } from "react-router";
 import type { Route } from "./+types/_index";
 import { createSiteMeta } from "../lib/site-meta";
 
-export function meta({ location }: Route.MetaArgs) {
-  return createSiteMeta({ path: location.pathname });
+export function meta({ location, matches }: Route.MetaArgs) {
+  return createSiteMeta({ path: location.pathname, matches });
 }
 
 export default function Home() {

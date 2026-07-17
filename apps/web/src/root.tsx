@@ -22,7 +22,16 @@ import { createSiteMeta } from "./lib/site-meta";
 
 export const middleware: Route.MiddlewareFunction[] = [clerkMiddleware()];
 
-export const loader = (args: Route.LoaderArgs) => rootAuthLoader(args);
+export const loader = async (args: Route.LoaderArgs) => {
+  const clerkData = await rootAuthLoader(args);
+  const siteOrigin = new URL(args.request.url).origin;
+
+  if (clerkData instanceof Response) {
+    return clerkData;
+  }
+
+  return Object.assign({}, clerkData, { siteOrigin });
+};
 
 // Module-level singleton: creating this inside App() would spin up a new
 // WebSocket + auth token fetch on every root re-render (e.g. every
@@ -41,8 +50,8 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-export function meta({ location }: Route.MetaArgs) {
-  return createSiteMeta({ path: location.pathname });
+export function meta({ location, matches }: Route.MetaArgs) {
+  return createSiteMeta({ path: location.pathname, matches });
 }
 
 export function Layout({ children }: { children: React.ReactNode }) {
