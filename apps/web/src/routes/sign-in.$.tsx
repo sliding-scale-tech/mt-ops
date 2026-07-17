@@ -1,6 +1,7 @@
-import { SignIn } from "@clerk/react-router";
+import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/react-router";
 import { useSignIn } from "@clerk/react-router/legacy";
 import { Button } from "@my-better-t-app/ui/components/button";
+import { Skeleton } from "@my-better-t-app/ui/components/skeleton";
 import { FlaskConical, LogIn } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -55,12 +56,25 @@ export default function SignInPage() {
 
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6">
-      <SignIn
-        routing="path"
-        path="/sign-in"
-        signUpUrl="/sign-up"
-        forceRedirectUrl="/dashboard"
-      />
+      {/*
+        Fixed min-height reserves the widget's footprint for the entire
+        loading sequence (Clerk SDK bootstrap, then its own internal UI
+        chunk fetch) so the demo-account card below never jumps — Clerk
+        exposes no single "fully painted" event to key off of instead.
+      */}
+      <div className="flex min-h-[500px] w-full max-w-100 items-center justify-center">
+        <ClerkLoading>
+          <SignInSkeleton />
+        </ClerkLoading>
+        <ClerkLoaded>
+          <SignIn
+            routing="path"
+            path="/sign-in"
+            signUpUrl="/sign-up"
+            forceRedirectUrl="/dashboard"
+          />
+        </ClerkLoaded>
+      </div>
       <div className="glass w-full max-w-100 rounded-2xl p-4">
         <div className="mb-3 flex items-center gap-2 text-sm font-semibold">
           <span className="brand-gradient flex size-7 items-center justify-center rounded-lg text-white">
@@ -94,6 +108,38 @@ export default function SignInPage() {
         <p className="mt-3 text-center text-[11px] text-muted-foreground">
           Demo data is sample-only and never saved.
         </p>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Reserves the same footprint as Clerk's <SignIn> widget while its JS
+ * chunks are still loading, so the page below it doesn't jump once it
+ * mounts.
+ */
+function SignInSkeleton() {
+  return (
+    <div className="h-full w-full overflow-hidden rounded-2xl border bg-card">
+      <div className="space-y-4 p-8">
+        <div className="space-y-2 text-center">
+          <Skeleton className="mx-auto h-6 w-48" />
+          <Skeleton className="mx-auto h-4 w-56" />
+        </div>
+        <Skeleton className="h-10 w-full rounded-lg" />
+        <div className="flex items-center gap-3 py-1">
+          <Skeleton className="h-px flex-1" />
+          <Skeleton className="h-3 w-6" />
+          <Skeleton className="h-px flex-1" />
+        </div>
+        <div className="space-y-2">
+          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-10 w-full rounded-lg" />
+        </div>
+        <Skeleton className="h-10 w-full rounded-lg" />
+      </div>
+      <div className="border-t p-4 text-center">
+        <Skeleton className="mx-auto h-3 w-40" />
       </div>
     </div>
   );

@@ -1,11 +1,6 @@
 import { api } from "@my-better-t-app/backend/convex/_generated/api";
 import { Skeleton } from "@my-better-t-app/ui/components/skeleton";
-import {
-  Authenticated,
-  AuthLoading,
-  Unauthenticated,
-  useQuery,
-} from "convex/react";
+import { useQuery } from "convex/react";
 import {
   CalendarDays,
   Clock,
@@ -17,6 +12,7 @@ import {
 import { Navigate, Outlet } from "react-router";
 
 import { AppSidebar } from "../components/app-sidebar";
+import { useAuthGate } from "../hooks/use-auth-gate";
 import { DEMO_ADMIN_EMAIL, DEMO_ORG_NAME } from "../lib/demo";
 
 export function meta() {
@@ -33,19 +29,10 @@ const adminNav = [
 ] as const;
 
 export default function AdminLayout() {
-  return (
-    <>
-      <AuthLoading>
-        <AdminSkeleton />
-      </AuthLoading>
-      <Unauthenticated>
-        <Navigate to="/sign-in" replace />
-      </Unauthenticated>
-      <Authenticated>
-        <AdminGuard />
-      </Authenticated>
-    </>
-  );
+  const authState = useAuthGate();
+  if (authState === "loading") return <AdminSkeleton />;
+  if (authState === "unauthenticated") return <Navigate to="/sign-in" replace />;
+  return <AdminGuard />;
 }
 
 function AdminSkeleton() {

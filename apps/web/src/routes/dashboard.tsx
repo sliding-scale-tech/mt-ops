@@ -10,13 +10,7 @@ import {
 import { Input } from "@my-better-t-app/ui/components/input";
 import { Label } from "@my-better-t-app/ui/components/label";
 import { Skeleton } from "@my-better-t-app/ui/components/skeleton";
-import {
-  Authenticated,
-  AuthLoading,
-  Unauthenticated,
-  useMutation,
-  useQuery,
-} from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import {
   Building2,
   CalendarDays,
@@ -30,6 +24,7 @@ import { Navigate, Outlet } from "react-router";
 import { toast } from "sonner";
 
 import { AppSidebar } from "../components/app-sidebar";
+import { useAuthGate } from "../hooks/use-auth-gate";
 import {
   DEMO_ADMIN_EMAIL,
   DEMO_ORG_NAME,
@@ -49,19 +44,10 @@ const workerNav = [
 ] as const;
 
 export default function DashboardLayout() {
-  return (
-    <>
-      <AuthLoading>
-        <FullPageLoader />
-      </AuthLoading>
-      <Unauthenticated>
-        <Navigate to="/sign-in" replace />
-      </Unauthenticated>
-      <Authenticated>
-        <Gateway />
-      </Authenticated>
-    </>
-  );
+  const authState = useAuthGate();
+  if (authState === "loading") return <FullPageLoader />;
+  if (authState === "unauthenticated") return <Navigate to="/sign-in" replace />;
+  return <Gateway />;
 }
 
 function FullPageLoader() {
