@@ -14,8 +14,8 @@ import { createSiteMeta } from "../lib/site-meta";
 
 export function meta({ location, matches }: { location: { pathname: string }; matches?: Route.MetaArgs["matches"] }) {
   return createSiteMeta({
-    title: "Sign in — MT Operation Systems",
-    description: "Sign in to MT Operation Systems to manage operations, jobsites, and your team.",
+    title: "Sign in — Fieldops",
+    description: "Sign in to Fieldops to manage operations, jobsites, and your team.",
     path: location.pathname,
     matches,
   });
@@ -114,7 +114,7 @@ export default function SignInPage() {
               </span>
               <div>
                 <h1 className="text-lg font-bold tracking-tight sm:text-xl">
-                  Sign in to MT Operation Systems
+                  Sign in to Fieldops
                 </h1>
                 <p className="mt-1 text-xs text-muted-foreground sm:text-sm">
                   Welcome back! Please sign in to continue

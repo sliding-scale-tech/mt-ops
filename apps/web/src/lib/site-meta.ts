@@ -1,4 +1,4 @@
-export const SITE_NAME = "MT Operation Systems";
+export const SITE_NAME = "Fieldops";
 export const SITE_DESCRIPTION =
   "Operations platform for field teams, jobsites, and workflows.";
 export const OG_IMAGE_PATH = "/og-image.png";

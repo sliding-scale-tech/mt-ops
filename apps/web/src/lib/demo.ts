@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export const DEMO_ADMIN_EMAIL = "dummyadmin@mtops.com";
 export const DEMO_WORKER_EMAIL = "dummyuser@mtops.com";
-export const DEMO_ORG_NAME = "MT Demo Co";
+export const DEMO_ORG_NAME = "Fieldops Demo Co";
 export const DEMO_WORKER_ID = "m-demo-worker";
 
 export type DemoJobsite = { id: string; name: string; address: string };
@@ -112,7 +112,7 @@ function seed(): DemoState {
   };
 }
 
-const KEY = "mtops-demo-v2";
+const KEY = "fieldops-demo-v2";
 
 function load(): DemoState {
   if (typeof sessionStorage === "undefined") return seed();

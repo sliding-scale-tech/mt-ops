@@ -43,10 +43,10 @@ export function AppSidebar({
           </span>
           <div className="min-w-0 leading-tight">
             <div className="truncate text-sm font-bold tracking-widest">
-              MT-OPERATION
+              Fieldops
             </div>
             <div className="truncate text-xs text-muted-foreground">
-              {orgName ?? "Systems"}
+              {orgName ?? "Fieldops"}
             </div>
           </div>
         </div>
