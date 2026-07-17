@@ -24,7 +24,7 @@ function RealWorkerInvoices() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Invoices</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Invoices</h1>
         <p className="text-muted-foreground">
           Upload your invoice and track its approval status.
         </p>
@@ -130,7 +130,7 @@ function UploadInvoiceCard() {
             />
           </div>
           <div className="sm:col-span-2">
-            <Button type="submit" disabled={uploading || !file}>
+            <Button type="submit" className="w-full sm:w-auto" disabled={uploading || !file}>
               {uploading ? "Uploading..." : "Submit invoice"}
             </Button>
           </div>

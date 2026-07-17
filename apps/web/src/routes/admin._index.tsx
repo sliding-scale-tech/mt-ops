@@ -42,13 +42,13 @@ function RealAdminOverview() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Overview</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Overview</h1>
         <p className="text-muted-foreground">
           Track workers, invoices, and recent activity.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <StatCard
           title="Active Workers"
           value={workerCount ?? "…"}
@@ -115,12 +115,12 @@ function JobsitesCard() {
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-start justify-between space-y-0">
+      <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
         <div>
           <CardTitle>Jobsites</CardTitle>
           <CardDescription>Manage jobsite options for workers.</CardDescription>
         </div>
-        <Button onClick={() => setAdding((v) => !v)}>
+        <Button onClick={() => setAdding((v) => !v)} className="w-full sm:w-auto">
           {adding ? <X className="size-4" /> : <Plus className="size-4" />}
           {adding ? "Cancel" : "Add jobsite"}
         </Button>
@@ -128,7 +128,7 @@ function JobsitesCard() {
       <CardContent>
         {adding && (
           <form
-            className="mb-4 flex flex-wrap items-end gap-3 glass rounded-xl p-4"
+            className="glass mb-4 flex flex-col gap-3 rounded-xl p-4 sm:flex-row sm:flex-wrap sm:items-end"
             onSubmit={async (e) => {
               e.preventDefault();
               const ok = await run(
@@ -142,7 +142,7 @@ function JobsitesCard() {
               }
             }}
           >
-            <div className="min-w-40 flex-1">
+            <div className="w-full sm:min-w-40 sm:flex-1">
               <Input
                 placeholder="Name (e.g. FRA44)"
                 value={newName}
@@ -150,14 +150,14 @@ function JobsitesCard() {
                 required
               />
             </div>
-            <div className="min-w-40 flex-1">
+            <div className="w-full sm:min-w-40 sm:flex-1">
               <Input
                 placeholder="Address (e.g. Frankfurt)"
                 value={newAddress}
                 onChange={(e) => setNewAddress(e.target.value)}
               />
             </div>
-            <Button type="submit">Save</Button>
+            <Button type="submit" className="w-full sm:w-auto">Save</Button>
           </form>
         )}
 

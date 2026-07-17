@@ -52,7 +52,7 @@ import { StatusBadge } from "./status-badge";
 
 export function DemoBanner() {
   return (
-    <div className="glass mb-6 flex items-center gap-3 rounded-2xl border-amber-300/60 px-4 py-3 text-sm">
+    <div className="glass mb-6 flex flex-col gap-3 rounded-2xl border-amber-300/60 px-4 py-3 text-sm sm:flex-row sm:items-center">
       <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-amber-100 text-amber-600 dark:bg-amber-950 dark:text-amber-300">
         <FlaskConical className="size-4" />
       </span>
@@ -121,13 +121,13 @@ export function DemoAdminOverview() {
     <div className="space-y-6">
       <DemoBanner />
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Overview</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Overview</h1>
         <p className="text-muted-foreground">
           Track workers, invoices, and recent activity.
         </p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
         <StatCard title="Active Workers" value={workers} sub="Active on platform" icon={Users} />
         <StatCard title="Invoice Value" value={formatAmount(totalApproved)} sub="Total approved amount" icon={FileText} />
         <StatCard title="Pending Invoices" value={pending} icon={FileText} linkTo="/admin/invoices" linkLabel="Review now" />
@@ -136,12 +136,12 @@ export function DemoAdminOverview() {
       </div>
 
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div>
             <CardTitle>Jobsites</CardTitle>
             <CardDescription>Manage jobsite options for workers.</CardDescription>
           </div>
-          <Button onClick={() => setAdding((v) => !v)}>
+          <Button onClick={() => setAdding((v) => !v)} className="w-full sm:w-auto">
             {adding ? <X className="size-4" /> : <Plus className="size-4" />}
             {adding ? "Cancel" : "Add jobsite"}
           </Button>
@@ -149,7 +149,7 @@ export function DemoAdminOverview() {
         <CardContent>
           {adding && (
             <form
-              className="glass mb-4 flex flex-wrap items-end gap-3 rounded-xl p-4"
+              className="glass mb-4 flex flex-col gap-3 rounded-xl p-4 sm:flex-row sm:flex-wrap sm:items-end"
               onSubmit={(e) => {
                 e.preventDefault();
                 update((d) => {
@@ -161,13 +161,13 @@ export function DemoAdminOverview() {
                 setAdding(false);
               }}
             >
-              <div className="min-w-40 flex-1">
+              <div className="w-full sm:min-w-40 sm:flex-1">
                 <Input placeholder="Name (e.g. FRA44)" value={newName} onChange={(e) => setNewName(e.target.value)} required />
               </div>
-              <div className="min-w-40 flex-1">
+              <div className="w-full sm:min-w-40 sm:flex-1">
                 <Input placeholder="Address (e.g. Frankfurt)" value={newAddress} onChange={(e) => setNewAddress(e.target.value)} />
               </div>
-              <Button type="submit">Save</Button>
+              <Button type="submit" className="w-full sm:w-auto">Save</Button>
             </form>
           )}
           <div className="overflow-x-auto">
@@ -343,11 +343,11 @@ export function DemoAdminInvoices() {
     <div className="space-y-6">
       <DemoBanner />
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Invoices</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Invoices</h1>
         <p className="text-muted-foreground">Review invoices and manage approvals.</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard title="All" value={counts.all} icon={FileText} />
         <StatCard title="Pending" value={counts.pending} icon={Clock} />
         <StatCard title="Approved" value={counts.approved} icon={CheckCircle2} />
@@ -355,7 +355,7 @@ export function DemoAdminInvoices() {
       </div>
 
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div>
             <CardTitle>Pending Approvals</CardTitle>
             <CardDescription>Invoices awaiting review</CardDescription>
@@ -389,15 +389,15 @@ export function DemoAdminInvoices() {
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div>
             <CardTitle>All Invoices</CardTitle>
             <CardDescription>Review and manage submitted invoices</CardDescription>
           </div>
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <label className="flex w-full flex-col gap-2 text-sm text-muted-foreground sm:w-auto sm:flex-row sm:items-center">
             Filter
             <select
-              className="rounded-lg border bg-background px-3 py-1.5 text-sm text-foreground"
+              className="w-full rounded-lg border bg-background px-3 py-1.5 text-sm text-foreground sm:w-auto"
               value={filter}
               onChange={(e) => setFilter(e.target.value as typeof filter)}
             >
@@ -444,7 +444,7 @@ export function DemoAdminSettings() {
     <div className="space-y-6">
       <DemoBanner />
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Settings</h1>
         <p className="text-muted-foreground">
           Invite users to your organization and manage your team.
         </p>
@@ -465,7 +465,7 @@ export function DemoAdminSettings() {
         </CardHeader>
         <CardContent>
           <form
-            className="flex flex-wrap items-end gap-3"
+            className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end"
             onSubmit={(e) => {
               e.preventDefault();
               update((d) => {
@@ -481,7 +481,7 @@ export function DemoAdminSettings() {
               setJobsiteId("");
             }}
           >
-            <div className="min-w-56 flex-1 space-y-2">
+            <div className="w-full space-y-2 sm:min-w-56 sm:flex-1">
               <Label htmlFor="demo-invite-email">Email address</Label>
               <Input
                 id="demo-invite-email"
@@ -492,7 +492,7 @@ export function DemoAdminSettings() {
                 required
               />
             </div>
-            <div className="min-w-44 space-y-2">
+            <div className="w-full space-y-2 sm:min-w-44 sm:w-auto">
               <Label htmlFor="demo-invite-jobsite">Assign jobsite (optional)</Label>
               <select
                 id="demo-invite-jobsite"
@@ -508,7 +508,7 @@ export function DemoAdminSettings() {
                 ))}
               </select>
             </div>
-            <Button type="submit" disabled={!email.trim()}>
+            <Button type="submit" className="w-full sm:w-auto" disabled={!email.trim()}>
               Invite
             </Button>
           </form>
@@ -644,7 +644,7 @@ export function DemoWorkerOverview() {
       <DemoBanner />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-xl font-bold tracking-tight sm:text-2xl">
             Welcome, {state.workerName}
           </h1>
           <p className="text-muted-foreground">
@@ -655,13 +655,13 @@ export function DemoWorkerOverview() {
             </span>
           </p>
         </div>
-        <Button nativeButton={false} render={<Link to="/dashboard/invoices" />}>
+        <Button nativeButton={false} render={<Link to="/dashboard/invoices" />} className="w-full sm:w-auto">
           <Upload className="size-4" />
           Upload invoice
         </Button>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <StatCard
           title="Invoices"
           value={mine.length}
@@ -693,7 +693,7 @@ export function DemoWorkerInvoices() {
     <div className="space-y-6">
       <DemoBanner />
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Invoices</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Invoices</h1>
         <p className="text-muted-foreground">
           Upload your invoice and track its approval status.
         </p>
@@ -774,7 +774,7 @@ export function DemoWorkerInvoices() {
               />
             </div>
             <div className="sm:col-span-2">
-              <Button type="submit" disabled={!file}>
+              <Button type="submit" className="w-full sm:w-auto" disabled={!file}>
                 Submit invoice
               </Button>
             </div>
@@ -834,10 +834,10 @@ export function DemoWorkerSettings() {
   const me = state.members.find((m) => m.id === DEMO_WORKER_ID);
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="w-full space-y-6">
       <DemoBanner />
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Settings</h1>
         <p className="text-muted-foreground">Manage your profile.</p>
       </div>
 
@@ -887,7 +887,7 @@ export function DemoWorkerSettings() {
               <Label>Assigned jobsite</Label>
               <Input value={jobsiteName(state, me?.jobsiteId)} disabled />
             </div>
-            <Button type="submit" disabled={!name.trim()}>
+            <Button type="submit" className="w-full sm:w-auto" disabled={!name.trim()}>
               Save changes
             </Button>
           </form>

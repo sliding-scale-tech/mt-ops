@@ -24,7 +24,7 @@ export default function Home() {
 
   return (
     <div className="flex min-h-svh flex-col">
-      <header className="glass sticky top-0 z-10 flex items-center justify-between rounded-none border-x-0 border-t-0 px-6 py-4">
+      <header className="glass sticky top-0 z-10 flex items-center justify-between rounded-none border-x-0 border-t-0 px-4 py-4 sm:px-6">
         <div className="flex items-center gap-2">
           <span className="brand-gradient flex size-8 items-center justify-center rounded-lg text-white shadow-md shadow-purple-500/30">
             <Building2 className="size-4" />
@@ -34,11 +34,11 @@ export default function Home() {
             <div className="text-xs text-muted-foreground">Systems</div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" nativeButton={false} render={<Link to="/sign-in" />}>
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Button variant="ghost" size="sm" className="px-2 sm:px-3" nativeButton={false} render={<Link to="/sign-in" />}>
             Sign in
           </Button>
-          <Button nativeButton={false} render={<Link to="/sign-up" />}>Get started</Button>
+          <Button size="sm" className="px-2 sm:px-3" nativeButton={false} render={<Link to="/sign-up" />}>Get started</Button>
         </div>
       </header>
 
