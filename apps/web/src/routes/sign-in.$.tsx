@@ -9,9 +9,14 @@ import { toast } from "sonner";
 
 import { GoogleIcon } from "../components/google-icon";
 import { getClerkErrorMessage } from "../lib/clerk-error";
+import { createSiteMeta } from "../lib/site-meta";
 
-export function meta() {
-  return [{ title: "Sign in — MT Operation Systems" }];
+export function meta({ location }: { location: { pathname: string } }) {
+  return createSiteMeta({
+    title: "Sign in — MT Operation Systems",
+    description: "Sign in to MT Operation Systems to manage operations, jobsites, and your team.",
+    path: location.pathname,
+  });
 }
 
 const demoAccounts = [
@@ -19,13 +24,13 @@ const demoAccounts = [
     label: "Admin demo",
     email: "dummyadmin@mtops.com",
     password: "dummyadmin321",
-    blurb: "Review invoices, manage jobsites, invite users",
+    blurb: "Oversee operations, jobsites, and invite users",
   },
   {
     label: "Worker demo",
     email: "dummyuser@mtops.com",
     password: "dummyuser321",
-    blurb: "Upload invoices, track approvals",
+    blurb: "Run field operations and track approvals",
   },
 ];
 
