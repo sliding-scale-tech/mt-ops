@@ -1,5 +1,10 @@
 import { SignIn } from "@clerk/react-router";
-import { FlaskConical } from "lucide-react";
+import { useSignIn } from "@clerk/react-router/legacy";
+import { Button } from "@my-better-t-app/ui/components/button";
+import { FlaskConical, LogIn } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 export function meta() {
   return [{ title: "Sign in — MT Operation Systems" }];
@@ -21,6 +26,33 @@ const demoAccounts = [
 ];
 
 export default function SignInPage() {
+  const { signIn, setActive, isLoaded } = useSignIn();
+  const navigate = useNavigate();
+  const [loadingEmail, setLoadingEmail] = useState<string | null>(null);
+
+  const signInAsDemo = async (email: string, password: string) => {
+    if (!isLoaded) return;
+    setLoadingEmail(email);
+    try {
+      const attempt = await signIn.create({ identifier: email, password });
+      if (attempt.status === "complete") {
+        await setActive({ session: attempt.createdSessionId });
+        navigate("/dashboard");
+      } else {
+        toast.error("Demo sign-in didn't complete — try again");
+      }
+    } catch (err) {
+      const message =
+        err && typeof err === "object" && "errors" in err
+          ? // @ts-expect-error Clerk error shape
+            (err.errors?.[0]?.message ?? "Demo sign-in failed")
+          : "Demo sign-in failed";
+      toast.error(message);
+    } finally {
+      setLoadingEmail(null);
+    }
+  };
+
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 p-6">
       <SignIn
@@ -38,11 +70,24 @@ export default function SignInPage() {
         </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {demoAccounts.map((account) => (
-            <div key={account.email} className="rounded-xl border border-white/50 bg-white/40 p-3 text-xs dark:border-white/10 dark:bg-white/5">
+            <div
+              key={account.email}
+              className="rounded-xl border border-white/50 bg-white/40 p-3 text-xs dark:border-white/10 dark:bg-white/5"
+            >
               <div className="font-semibold">{account.label}</div>
               <div className="mt-1 font-mono text-[11px]">{account.email}</div>
               <div className="font-mono text-[11px]">{account.password}</div>
               <div className="mt-1 text-muted-foreground">{account.blurb}</div>
+              <Button
+                type="button"
+                size="sm"
+                className="mt-2 w-full"
+                disabled={!isLoaded || loadingEmail !== null}
+                onClick={() => signInAsDemo(account.email, account.password)}
+              >
+                <LogIn className="size-3.5" />
+                {loadingEmail === account.email ? "Signing in..." : `Log in as ${account.label}`}
+              </Button>
             </div>
           ))}
         </div>
