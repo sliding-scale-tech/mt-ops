@@ -14,9 +14,14 @@ import { toast } from "sonner";
 
 import { GoogleIcon } from "../components/google-icon";
 import { getClerkErrorMessage } from "../lib/clerk-error";
+import { createSiteMeta } from "../lib/site-meta";
 
-export function meta() {
-  return [{ title: "Sign up — MT Operation Systems" }];
+export function meta({ location }: { location: { pathname: string } }) {
+  return createSiteMeta({
+    title: "Sign up — MT Operation Systems",
+    description: "Create your MT Operation Systems account and start managing your organization.",
+    path: location.pathname,
+  });
 }
 
 export default function SignUpPage() {

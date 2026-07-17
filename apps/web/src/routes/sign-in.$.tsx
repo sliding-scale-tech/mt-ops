@@ -9,9 +9,14 @@ import { toast } from "sonner";
 
 import { GoogleIcon } from "../components/google-icon";
 import { getClerkErrorMessage } from "../lib/clerk-error";
+import { createSiteMeta } from "../lib/site-meta";
 
-export function meta() {
-  return [{ title: "Sign in — MT Operation Systems" }];
+export function meta({ location }: { location: { pathname: string } }) {
+  return createSiteMeta({
+    title: "Sign in — MT Operation Systems",
+    description: "Sign in to MT Operation Systems to manage invoices, jobsites, and your team.",
+    path: location.pathname,
+  });
 }
 
 const demoAccounts = [

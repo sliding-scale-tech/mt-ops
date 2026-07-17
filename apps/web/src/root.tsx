@@ -18,6 +18,7 @@ import type { Route } from "./+types/root";
 import { AnimatedOutlet } from "./components/animated-outlet";
 import { RouteProgress } from "./components/route-progress";
 import { ThemeProvider } from "./components/theme-provider";
+import { createSiteMeta } from "./lib/site-meta";
 
 export const middleware: Route.MiddlewareFunction[] = [clerkMiddleware()];
 
@@ -30,6 +31,8 @@ export const loader = (args: Route.LoaderArgs) => rootAuthLoader(args);
 const convex = new ConvexReactClient(env.VITE_CONVEX_URL);
 
 export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/logo.webp", type: "image/webp" },
+  { rel: "apple-touch-icon", href: "/logo.webp" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
@@ -37,6 +40,10 @@ export const links: Route.LinksFunction = () => [
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
 ];
+
+export function meta({ location }: Route.MetaArgs) {
+  return createSiteMeta({ path: location.pathname });
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

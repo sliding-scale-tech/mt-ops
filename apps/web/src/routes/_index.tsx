@@ -4,15 +4,10 @@ import { Building2, FileText, Users } from "lucide-react";
 import { Link, Navigate } from "react-router";
 
 import type { Route } from "./+types/_index";
+import { createSiteMeta } from "../lib/site-meta";
 
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "MT Operation Systems" },
-    {
-      name: "description",
-      content: "Multi-tenant operations platform for invoices, jobsites and teams.",
-    },
-  ];
+export function meta({ location }: Route.MetaArgs) {
+  return createSiteMeta({ path: location.pathname });
 }
 
 export default function Home() {
