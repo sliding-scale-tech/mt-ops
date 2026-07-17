@@ -25,8 +25,8 @@ export default function Home() {
             <Building2 className="size-4" />
           </span>
           <div className="leading-tight">
-            <div className="text-sm font-bold tracking-wide">MT-OPERATION</div>
-            <div className="text-xs text-muted-foreground">Systems</div>
+            <div className="text-sm font-bold tracking-wide">Fieldops</div>
+            <div className="text-xs text-muted-foreground">Operations platform</div>
           </div>
         </div>
         <div className="flex items-center gap-1.5 sm:gap-2">

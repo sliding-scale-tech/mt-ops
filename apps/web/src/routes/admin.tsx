@@ -17,7 +17,7 @@ import { useAuthGate } from "../hooks/use-auth-gate";
 import { DEMO_ADMIN_EMAIL, DEMO_ORG_NAME } from "../lib/demo";
 
 export function meta() {
-  return [{ title: "Admin — MT Operation Systems" }];
+  return [{ title: "Admin — Fieldops" }];
 }
 
 const adminNav = [

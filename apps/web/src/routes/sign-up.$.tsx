@@ -19,8 +19,8 @@ import { createSiteMeta } from "../lib/site-meta";
 
 export function meta({ location, matches }: { location: { pathname: string }; matches?: Route.MetaArgs["matches"] }) {
   return createSiteMeta({
-    title: "Sign up — MT Operation Systems",
-    description: "Create your MT Operation Systems account and start running operations for your organization.",
+    title: "Sign up — Fieldops",
+    description: "Create your Fieldops account and start running operations for your organization.",
     path: location.pathname,
     matches,
   });
@@ -101,7 +101,7 @@ export default function SignUpPage() {
               </h1>
               <p className="mt-1 text-xs text-muted-foreground">
                 {step === "register"
-                  ? "Set up your organization on MT Operation Systems"
+                  ? "Set up your organization on Fieldops"
                   : `Enter the code we sent to ${email}`}
               </p>
             </div>

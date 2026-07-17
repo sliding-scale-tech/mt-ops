@@ -33,7 +33,7 @@ import {
 } from "../lib/demo";
 
 export function meta() {
-  return [{ title: "Dashboard — MT Operation Systems" }];
+  return [{ title: "Dashboard — Fieldops" }];
 }
 
 const workerNav = [
