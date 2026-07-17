@@ -50,11 +50,11 @@ function RealAdminInvoices() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Invoices</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Invoices</h1>
         <p className="text-muted-foreground">Review invoices and manage approvals.</p>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard title="All" value={counts.all ?? "…"} icon={FileText} />
         <StatCard title="Pending" value={counts.pending ?? "…"} icon={Clock} />
         <StatCard title="Approved" value={counts.approved ?? "…"} icon={CheckCircle2} />
@@ -62,7 +62,7 @@ function RealAdminInvoices() {
       </div>
 
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div>
             <CardTitle>Pending Approvals</CardTitle>
             <CardDescription>Invoices awaiting review</CardDescription>
@@ -85,15 +85,15 @@ function RealAdminInvoices() {
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-row items-start justify-between space-y-0">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:space-y-0">
           <div>
             <CardTitle>All Invoices</CardTitle>
             <CardDescription>Review and manage submitted invoices</CardDescription>
           </div>
-          <label className="flex items-center gap-2 text-sm text-muted-foreground">
+          <label className="flex w-full flex-col gap-2 text-sm text-muted-foreground sm:w-auto sm:flex-row sm:items-center">
             Filter
             <select
-              className="rounded-lg border bg-background px-3 py-1.5 text-sm text-foreground"
+              className="w-full rounded-lg border bg-background px-3 py-1.5 text-sm text-foreground sm:w-auto"
               value={filter}
               onChange={(e) => setFilter(e.target.value as typeof filter)}
             >

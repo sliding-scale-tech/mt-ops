@@ -22,8 +22,8 @@ import { useEffect, useState } from "react";
 import { Navigate } from "react-router";
 import { toast } from "sonner";
 
-import { AnimatedOutlet, FadeSwap } from "../components/animated-outlet";
-import { AppSidebar } from "../components/app-sidebar";
+import { FadeSwap } from "../components/animated-outlet";
+import { AppLayout } from "../components/app-layout";
 import { FullScreenLoader } from "../components/full-screen-loader";
 import { useAuthGate } from "../hooks/use-auth-gate";
 import {
@@ -93,17 +93,12 @@ function Gateway({ isAuthenticated }: { isAuthenticated: boolean }) {
 
   return (
     <FadeSwap stateKey="app">
-      <div className="flex min-h-svh">
-        <AppSidebar
-          items={workerNav}
-          name={me?.name}
-          email={me?.email ?? ""}
-          orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
-        />
-        <main className="min-w-0 flex-1 p-8">
-          <AnimatedOutlet />
-        </main>
-      </div>
+      <AppLayout
+        items={workerNav}
+        name={me?.name}
+        email={me?.email ?? ""}
+        orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
+      />
     </FadeSwap>
   );
 }

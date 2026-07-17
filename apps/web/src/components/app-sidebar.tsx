@@ -1,6 +1,6 @@
 import { useClerk } from "@clerk/react-router";
 import type { LucideIcon } from "lucide-react";
-import { Building2, LogOut } from "lucide-react";
+import { Building2, LogOut, X } from "lucide-react";
 import { NavLink } from "react-router";
 
 export type SidebarNavItem = {
@@ -16,36 +16,56 @@ export function AppSidebar({
   name,
   email,
   orgName,
+  mobileOpen = false,
+  onMobileClose,
 }: {
   items: readonly SidebarNavItem[];
   name?: string;
   email: string;
   orgName?: string;
+  mobileOpen?: boolean;
+  onMobileClose?: () => void;
 }) {
   const { signOut } = useClerk();
 
   return (
-    <aside className="glass-strong sticky top-0 flex h-svh w-64 shrink-0 flex-col border-y-0 border-l-0">
-      <div className="flex items-center gap-2.5 px-5 pb-2 pt-5">
-        <span className="brand-gradient flex size-9 shrink-0 items-center justify-center rounded-xl text-white shadow-md shadow-purple-500/30">
-          <Building2 className="size-4.5" />
-        </span>
-        <div className="min-w-0 leading-tight">
-          <div className="truncate text-sm font-bold tracking-widest">
-            MT-OPERATION
-          </div>
-          <div className="truncate text-xs text-muted-foreground">
-            {orgName ?? "Systems"}
+    <aside
+      className={`glass-strong flex h-svh w-full flex-col border-y-0 border-l-0 lg:static lg:z-auto lg:w-64 lg:shrink-0 ${
+        mobileOpen
+          ? "fixed inset-0 z-50 animate-in slide-in-from-left duration-300"
+          : "hidden lg:flex"
+      }`}
+    >
+      <div className="flex items-center justify-between gap-2.5 px-5 pb-2 pt-5">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span className="brand-gradient flex size-9 shrink-0 items-center justify-center rounded-xl text-white shadow-md shadow-purple-500/30">
+            <Building2 className="size-4.5" />
+          </span>
+          <div className="min-w-0 leading-tight">
+            <div className="truncate text-sm font-bold tracking-widest">
+              MT-OPERATION
+            </div>
+            <div className="truncate text-xs text-muted-foreground">
+              {orgName ?? "Systems"}
+            </div>
           </div>
         </div>
+        <button
+          type="button"
+          aria-label="Close menu"
+          className="flex size-10 items-center justify-center rounded-xl transition-colors hover:bg-white/40 dark:hover:bg-white/10 lg:hidden"
+          onClick={onMobileClose}
+        >
+          <X className="size-5" />
+        </button>
       </div>
-      <nav className="flex flex-1 flex-col gap-1 p-3">
+      <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
         {items.map((item) =>
           item.disabled ? (
             <span
               key={item.label}
               title="Available on the paid plan"
-              className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2 text-sm text-muted-foreground/50"
+              className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2.5 text-sm text-muted-foreground/50"
             >
               <item.icon className="size-4" />
               {item.label}
@@ -58,8 +78,9 @@ export function AppSidebar({
               key={item.label}
               to={item.to}
               end={item.end}
+              onClick={onMobileClose}
               className={({ isActive }) =>
-                `flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition-all ${
+                `flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-all ${
                   isActive
                     ? "brand-gradient font-medium text-white shadow-md shadow-purple-500/30"
                     : "text-foreground/80 hover:bg-white/40 dark:hover:bg-white/10"

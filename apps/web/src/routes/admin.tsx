@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import { Navigate } from "react-router";
 
-import { AnimatedOutlet, FadeSwap } from "../components/animated-outlet";
-import { AppSidebar } from "../components/app-sidebar";
+import { FadeSwap } from "../components/animated-outlet";
+import { AppLayout } from "../components/app-layout";
 import { FullScreenLoader } from "../components/full-screen-loader";
 import { useAuthGate } from "../hooks/use-auth-gate";
 import { DEMO_ADMIN_EMAIL, DEMO_ORG_NAME } from "../lib/demo";
@@ -54,17 +54,12 @@ function AdminGuard({ isAuthenticated }: { isAuthenticated: boolean }) {
       {loading ? (
         <FullScreenLoader label="Loading your workspace…" />
       ) : (
-        <div className="flex min-h-svh">
-          <AppSidebar
-            items={adminNav}
-            name={me?.name}
-            email={me?.email ?? ""}
-            orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
-          />
-          <main className="min-w-0 flex-1 p-8">
-            <AnimatedOutlet />
-          </main>
-        </div>
+        <AppLayout
+          items={adminNav}
+          name={me?.name}
+          email={me?.email ?? ""}
+          orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
+        />
       )}
     </FadeSwap>
   );

@@ -24,7 +24,7 @@ function RealAdminSettings() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Settings</h1>
         <p className="text-muted-foreground">
           Invite users to your organization and manage your team.
         </p>
@@ -77,8 +77,8 @@ function InviteCard() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form onSubmit={submit} className="flex flex-wrap items-end gap-3">
-          <div className="min-w-56 flex-1 space-y-2">
+        <form onSubmit={submit} className="flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-end">
+          <div className="w-full space-y-2 sm:min-w-56 sm:flex-1">
             <Label htmlFor="invite-email">Email address</Label>
             <Input
               id="invite-email"
@@ -89,7 +89,7 @@ function InviteCard() {
               required
             />
           </div>
-          <div className="min-w-44 space-y-2">
+          <div className="w-full space-y-2 sm:min-w-44 sm:w-auto">
             <Label htmlFor="invite-jobsite">Assign jobsite (optional)</Label>
             <select
               id="invite-jobsite"
@@ -105,7 +105,7 @@ function InviteCard() {
               ))}
             </select>
           </div>
-          <Button type="submit" disabled={saving || !email.trim()}>
+          <Button type="submit" className="w-full sm:w-auto" disabled={saving || !email.trim()}>
             {saving ? "Inviting..." : "Invite"}
           </Button>
         </form>

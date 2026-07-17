@@ -42,9 +42,9 @@ function RealWorkerSettings() {
   };
 
   return (
-    <div className="max-w-2xl space-y-6">
+    <div className="w-full space-y-6">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">Settings</h1>
+        <h1 className="text-xl font-bold tracking-tight sm:text-2xl">Settings</h1>
         <p className="text-muted-foreground">Manage your profile.</p>
       </div>
 
@@ -89,7 +89,7 @@ function RealWorkerSettings() {
                 <Label>Assigned jobsite</Label>
                 <Input value={me?.jobsite?.name ?? "Not assigned"} disabled />
               </div>
-              <Button type="submit" disabled={saving || !name.trim()}>
+              <Button type="submit" className="w-full sm:w-auto" disabled={saving || !name.trim()}>
                 {saving ? "Saving..." : "Save changes"}
               </Button>
             </form>
