@@ -1,6 +1,6 @@
 export const SITE_NAME = "MT Operation Systems";
 export const SITE_DESCRIPTION =
-  "operations platform for invoices, jobsites and teams.";
+  "Operations platform for field teams, jobsites, and workflows.";
 export const OG_IMAGE_PATH = "/og-image.png";
 
 export function getSiteOrigin() {

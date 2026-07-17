@@ -19,7 +19,7 @@ import { createSiteMeta } from "../lib/site-meta";
 export function meta({ location }: { location: { pathname: string } }) {
   return createSiteMeta({
     title: "Sign up — MT Operation Systems",
-    description: "Create your MT Operation Systems account and start managing your organization.",
+    description: "Create your MT Operation Systems account and start running operations for your organization.",
     path: location.pathname,
   });
 }

@@ -39,11 +39,12 @@ export default function Home() {
 
       <main className="flex flex-1 flex-col items-center justify-center px-6 py-16 text-center">
         <h1 className="max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-          Run your organization's invoices in <span className="brand-gradient bg-clip-text text-transparent">one place</span>
+          Run your organization's operations in <span className="brand-gradient bg-clip-text text-transparent">one place</span>
         </h1>
         <p className="mt-4 max-w-xl text-lg text-muted-foreground">
-          Create your organization, add jobsites, invite your team, and review
-          invoice submissions — all from a single dashboard.
+          Create your organization, add jobsites, invite your team, and manage
+          field operations — invoices, timesheets, and more — from a single
+          dashboard.
         </p>
         <div className="mt-8 flex gap-3">
           <Button size="lg" nativeButton={false} render={<Link to="/sign-up" />}>
@@ -68,8 +69,8 @@ export default function Home() {
             },
             {
               icon: FileText,
-              title: "Invoice approvals",
-              text: "Workers upload invoices, admins approve or reject.",
+              title: "Operations hub",
+              text: "Run invoices, timesheets, holidays, and jobsite workflows in one place.",
             },
           ].map(({ icon: Icon, title, text }) => (
             <div key={title} className="glass rounded-2xl p-5 text-left">
