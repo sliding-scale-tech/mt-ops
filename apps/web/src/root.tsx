@@ -22,6 +22,12 @@ export const middleware: Route.MiddlewareFunction[] = [clerkMiddleware()];
 
 export const loader = (args: Route.LoaderArgs) => rootAuthLoader(args);
 
+// Module-level singleton: creating this inside App() would spin up a new
+// WebSocket + auth token fetch on every root re-render (e.g. every
+// navigation, since rootAuthLoader's data changes), resetting every
+// useQuery to "loading" and causing a visible flash back to skeletons.
+const convex = new ConvexReactClient(env.VITE_CONVEX_URL);
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
@@ -50,7 +56,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App({ loaderData }: Route.ComponentProps) {
-  const convex = new ConvexReactClient(env.VITE_CONVEX_URL);
   return (
     <ClerkProvider loaderData={loaderData}>
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
