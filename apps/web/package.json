@@ -20,6 +20,7 @@
     "dotenv": "catalog:",
     "isbot": "^5.1.44",
     "lucide-react": "catalog:",
+    "motion": "^12.42.2",
     "next-themes": "catalog:",
     "react": "catalog:",
     "react-dom": "catalog:",

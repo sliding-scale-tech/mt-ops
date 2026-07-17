@@ -9,7 +9,6 @@ import {
 } from "@my-better-t-app/ui/components/card";
 import { Input } from "@my-better-t-app/ui/components/input";
 import { Label } from "@my-better-t-app/ui/components/label";
-import { Skeleton } from "@my-better-t-app/ui/components/skeleton";
 import { useMutation, useQuery } from "convex/react";
 import {
   Building2,
@@ -20,10 +19,12 @@ import {
   Settings,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Navigate, Outlet } from "react-router";
+import { Navigate } from "react-router";
 import { toast } from "sonner";
 
+import { AnimatedOutlet, FadeSwap } from "../components/animated-outlet";
 import { AppSidebar } from "../components/app-sidebar";
+import { FullScreenLoader } from "../components/full-screen-loader";
 import { useAuthGate } from "../hooks/use-auth-gate";
 import {
   DEMO_ADMIN_EMAIL,
@@ -45,56 +46,65 @@ const workerNav = [
 
 export default function DashboardLayout() {
   const authState = useAuthGate();
-  if (authState === "loading") return <FullPageLoader />;
   if (authState === "unauthenticated") return <Navigate to="/sign-in" replace />;
-  return <Gateway />;
-}
-
-function FullPageLoader() {
-  return (
-    <div className="mx-auto max-w-3xl space-y-4 p-8">
-      <Skeleton className="h-8 w-48" />
-      <Skeleton className="h-40 w-full" />
-      <Skeleton className="h-40 w-full" />
-    </div>
-  );
+  return <Gateway isAuthenticated={authState === "authenticated"} />;
 }
 
 /**
  * Ensures the Convex user record exists (and pending invites are applied),
  * then routes: admin → /admin, member → worker portal, no org → onboarding.
+ * `loading` (auth still settling, ensureCurrent in flight, or the profile
+ * query still pending) stays a single continuous state so the branded
+ * loader never flashes between two different loading screens.
  */
-function Gateway() {
+function Gateway({ isAuthenticated }: { isAuthenticated: boolean }) {
   const ensureCurrent = useMutation(api.users.ensureCurrent);
   const [ensured, setEnsured] = useState(false);
   const me = useQuery(api.users.current);
 
   useEffect(() => {
+    if (!isAuthenticated) return;
     ensureCurrent({})
       .catch(() => {})
       .finally(() => setEnsured(true));
-  }, [ensureCurrent]);
+  }, [ensureCurrent, isAuthenticated]);
 
-  if (!ensured || me === undefined) return <FullPageLoader />;
+  const loading = !isAuthenticated || !ensured || me === undefined;
+
+  if (loading) {
+    return (
+      <FadeSwap stateKey="loading">
+        <FullScreenLoader label="Signing you in…" />
+      </FadeSwap>
+    );
+  }
   if (me?.email === DEMO_ADMIN_EMAIL) return <Navigate to="/admin" replace />;
   const isDemo = me?.email === DEMO_WORKER_EMAIL;
   if (!isDemo) {
-    if (!me || !me.orgId) return <Onboarding />;
+    if (!me || !me.orgId) {
+      return (
+        <FadeSwap stateKey="onboarding">
+          <Onboarding />
+        </FadeSwap>
+      );
+    }
     if (me.role === "admin") return <Navigate to="/admin" replace />;
   }
 
   return (
-    <div className="flex min-h-svh">
-      <AppSidebar
-        items={workerNav}
-        name={me?.name}
-        email={me?.email ?? ""}
-        orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
-      />
-      <main className="min-w-0 flex-1 p-8">
-        <Outlet />
-      </main>
-    </div>
+    <FadeSwap stateKey="app">
+      <div className="flex min-h-svh">
+        <AppSidebar
+          items={workerNav}
+          name={me?.name}
+          email={me?.email ?? ""}
+          orgName={isDemo ? DEMO_ORG_NAME : me?.org?.name}
+        />
+        <main className="min-w-0 flex-1 p-8">
+          <AnimatedOutlet />
+        </main>
+      </div>
+    </FadeSwap>
   );
 }
 

@@ -10,12 +10,13 @@ import {
   isRouteErrorResponse,
   Links,
   Meta,
-  Outlet,
   Scripts,
   ScrollRestoration,
 } from "react-router";
 
 import type { Route } from "./+types/root";
+import { AnimatedOutlet } from "./components/animated-outlet";
+import { RouteProgress } from "./components/route-progress";
 import { ThemeProvider } from "./components/theme-provider";
 
 export const middleware: Route.MiddlewareFunction[] = [clerkMiddleware()];
@@ -65,8 +66,9 @@ export default function App({ loaderData }: Route.ComponentProps) {
           disableTransitionOnChange
           storageKey="vite-ui-theme"
         >
+          <RouteProgress />
           <div className="app-gradient min-h-svh">
-            <Outlet />
+            <AnimatedOutlet instant />
           </div>
           <Toaster richColors />
         </ThemeProvider>
